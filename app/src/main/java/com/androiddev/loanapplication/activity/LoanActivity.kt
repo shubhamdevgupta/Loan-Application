@@ -52,6 +52,8 @@ class LoanActivity : AppCompatActivity() {
                 progressDialog.setMessage("Loading ...")
                 progressDialog.setCancelable(false) // blocks UI interaction
                 progressDialog.show()
+            }else if(!isLoading){
+                progressDialog.dismiss()
             }
         }
 
@@ -62,7 +64,6 @@ class LoanActivity : AppCompatActivity() {
         loanViewmodel.loanData.observe(this) { response ->
             if (response.message.equals("Loan application submitted")) {
                 Toast.makeText(this, "Loan Applied Succesfully", Toast.LENGTH_SHORT).show()
-                progressDialog.dismiss()
                 finish()
             } else {
                 Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show()

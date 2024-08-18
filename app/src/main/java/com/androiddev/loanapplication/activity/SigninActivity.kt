@@ -45,6 +45,8 @@ class SigninActivity : AppCompatActivity() {
                 progressDialog.setMessage("Loading ...")
                 progressDialog.setCancelable(false) // blocks UI interaction
                 progressDialog.show()
+            }else if(!isLoading){
+                progressDialog.dismiss()
             }
         }
 
@@ -55,7 +57,6 @@ class SigninActivity : AppCompatActivity() {
         }
 
         signinViewmodel.signinData.observe(this) { signinData ->
-            // Display weather data to the UI
             if (signinData.message.equals("Sign In successful")) {
                 startActivity(Intent(this, DashboardActivity::class.java))
             } else {

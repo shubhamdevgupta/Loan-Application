@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.androiddev.loanapplication.ApiConfig
+import com.androiddev.loanapplication.network.ApiConfig
 import com.androiddev.loanapplication.model.CommonResponse
 import com.androiddev.loanapplication.network.SigninRequest
 import com.androiddev.loanapplication.network.SignupRequest

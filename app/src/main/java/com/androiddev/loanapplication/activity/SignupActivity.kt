@@ -82,22 +82,24 @@ class SignupActivity : AppCompatActivity() {
 
     private fun subscribe() {
         signinViewmodel.isLoading.observe(this) { isLoading ->
-            progressDialog = ProgressDialog(this)
-            progressDialog.setTitle("Please Wait")
-            progressDialog.setMessage("Loading ...")
-            progressDialog.setCancelable(false) // blocks UI interaction
-            progressDialog.show()
+            if (isLoading) {
+                progressDialog = ProgressDialog(this)
+                progressDialog.setTitle("Please Wait")
+                progressDialog.setMessage("Loading ...")
+                progressDialog.setCancelable(false) // blocks UI interaction
+                progressDialog.show()
+            } else if (!isLoading) {
+                progressDialog.dismiss()
+            }
         }
 
         signinViewmodel.isError.observe(this) { isError ->
-            // Hide display image and set the result text to the error message
             if (isError) {
                 Toast.makeText(this, signinViewmodel.errorMessage, Toast.LENGTH_SHORT).show()
             }
         }
 
         signinViewmodel.signinData.observe(this) { signinData ->
-            // Display weather data to the UI
             if (signinData.message.equals("User already exists")) {
                 Toast.makeText(this, "User already exists", Toast.LENGTH_SHORT).show()
             } else {

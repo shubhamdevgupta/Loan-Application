@@ -11,3 +11,11 @@ class LoanHistory internal constructor(
     val mobile: String
 )
 
+class UpdateProfile internal constructor(
+    val mobile: String,
+    val username: String,
+    val new_mobile: String
+)
+
+
+

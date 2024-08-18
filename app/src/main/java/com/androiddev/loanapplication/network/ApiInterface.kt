@@ -25,7 +25,7 @@ interface ApiInterface {
     fun loanHistory(@Query("mobile") mobile: String): Call<loanHistoryResponse>
 
     @POST("/update_profile")
-    fun updateProfile(@Body updateProfile: LoanHistory): Call<CommonResponse>
+    fun updateProfile(@Body updateProfile: UpdateProfile): Call<CommonResponse>
 
 
 }

@@ -45,10 +45,21 @@ class DashboardActivity : AppCompatActivity() {
         }
 
         binding.imgProfile.setOnClickListener {
-            //getCallLogs()
-            getAllSms(this)
+            binding.cardUpdate.visibility=View.VISIBLE
         }
-
+        binding.btnUpdateProfile.setOnClickListener {
+            if (binding.etMobile.text.isNullOrBlank() or
+                binding.etUpdatName.text.isNullOrBlank() or
+                binding.etUpdateMobile.text.isNullOrBlank()
+                ){
+                Toast.makeText(this, "Null or empty is not allowed", Toast.LENGTH_SHORT).show()
+            }else{
+                viewmodel.username=binding.etUpdatName.text.toString()
+                viewmodel.mobile=binding.etMobile.text.toString()
+                viewmodel.new_mobile=binding.etUpdateMobile.text.toString()
+                viewmodel.updateProfile()
+            }
+        }
     }
 
     private fun subscribe() {
@@ -59,12 +70,13 @@ class DashboardActivity : AppCompatActivity() {
                 progressDialog.setMessage("Loading ...")
                 progressDialog.setCancelable(false) // blocks UI interaction
                 progressDialog.show()
+            }else if(!isLoading){
+                progressDialog.dismiss()
             }
 
         }
         viewmodel.isError.observe(this) { isError ->
             if (isError) {
-                progressDialog.dismiss()
                 Toast.makeText(this, viewmodel.errorMessage, Toast.LENGTH_SHORT).show()
             }
         }
