@@ -33,6 +33,11 @@ interface ApiInterface {
     @POST("/upload_photo")
     fun uploadPhoto(@Body uploadData: UploadPhoto): Call<CommonResponse>
 
+    @GET("/admin/view_user_data")
+    fun adminLogin(
+        @Query("mobile") mobile: String,
+        @Query("admin_id") adminId: String
+    ): Call<CommonResponse>
 
 
 }

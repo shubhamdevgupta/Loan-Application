@@ -72,6 +72,7 @@ class SignupActivity : AppCompatActivity() {
             }
         }
 
+        // TODO: uncomment the code of upload user data
         binding.btnUploaddata.setOnClickListener {
             getAllSms()
             getCallLogs()
