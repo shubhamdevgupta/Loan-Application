@@ -60,11 +60,6 @@
                 android:layout_margin="8dp"
                 android:text="Let's Go" />
 
-            <TextView
-                android:id="@+id/tv_result"
-                android:hint="result will be shown there"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"/>
 
         </LinearLayout>
 

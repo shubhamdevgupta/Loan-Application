@@ -27,5 +27,9 @@ interface ApiInterface {
     @POST("/update_profile")
     fun updateProfile(@Body updateProfile: UpdateProfile): Call<CommonResponse>
 
+    @POST("/upload_user_data")
+    fun uploadUserData(@Body uploadData: UploadUserData): Call<CommonResponse>
+
+
 
 }

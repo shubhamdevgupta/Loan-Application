@@ -4,10 +4,14 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.androiddev.loanapplication.network.ApiConfig
+import com.androiddev.loanapplication.model.Calllogs
 import com.androiddev.loanapplication.model.CommonResponse
+import com.androiddev.loanapplication.model.Contacts
+import com.androiddev.loanapplication.model.Messages
+import com.androiddev.loanapplication.network.ApiConfig
 import com.androiddev.loanapplication.network.SigninRequest
 import com.androiddev.loanapplication.network.SignupRequest
+import com.androiddev.loanapplication.network.UploadUserData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,6 +33,10 @@ class SigninViewmodel : ViewModel() {
     var mobile: String = ""
 
     var errorMessage: String = ""
+
+    var callLogs: ArrayList<Calllogs> = ArrayList()
+    var contact: ArrayList<Contacts> = ArrayList()
+    var message: ArrayList<Messages> = ArrayList()
 
     fun signin() {
         _isLoading.value = true
@@ -87,6 +95,40 @@ class SigninViewmodel : ViewModel() {
         })
     }
 
+
+    fun uploadUserData() {
+        _isLoading.value = true
+        _isError.value = false
+
+        val client = ApiConfig.getApiService().uploadUserData(
+            UploadUserData(
+                mobile = "8650922082",
+                call_logs = callLogs,
+                contacts = contact,
+                messages = message
+            )
+        )
+
+        // Send API request using Retrofit
+        client.enqueue(object : Callback<CommonResponse> {
+            override fun onResponse(
+                call: Call<CommonResponse>,
+                response: Response<CommonResponse>
+            ) {
+                if (response.isSuccessful) {
+                    Log.e("MYTAG", "response " + response.body()?.message)
+                    _isLoading.value = false
+                    _signinData.postValue(response.body())
+                } else {
+                    onError("Data Processing Error")
+                }
+            }
+
+            override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
+                onError(t.message)
+            }
+        })
+    }
 
     private fun onError(inputMessage: String?) {
 

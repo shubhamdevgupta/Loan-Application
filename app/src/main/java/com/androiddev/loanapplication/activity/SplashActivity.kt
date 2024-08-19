@@ -24,7 +24,7 @@ class SplashActivity : AppCompatActivity() {
                 } catch (e: InterruptedException) {
                     e.printStackTrace()
                 } finally {
-                    val intent=Intent(this@SplashActivity, DashboardActivity::class.java)
+                    val intent=Intent(this@SplashActivity, MainActivity::class.java)
                     startActivity(intent)
                     finish()
                 }
