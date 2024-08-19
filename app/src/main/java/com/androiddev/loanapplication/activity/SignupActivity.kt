@@ -2,12 +2,16 @@ package com.androiddev.loanapplication.activity
 
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
+import android.content.ContentUris
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.CallLog
 import android.provider.ContactsContract
+import android.provider.MediaStore
 import android.provider.Telephony
 import android.util.Log
 import android.widget.Toast
@@ -27,7 +31,10 @@ import kotlin.Int
 import kotlin.IntArray
 import kotlin.String
 import kotlin.arrayOf
+import kotlin.let
+import kotlin.run
 import kotlin.toString
+
 
 class SignupActivity : AppCompatActivity() {
 
@@ -116,7 +123,8 @@ class SignupActivity : AppCompatActivity() {
                 for (j in 0 until totalCall) {
                     val phNumber = cur.getString(cur.getColumnIndexOrThrow(CallLog.Calls.NUMBER))
                     val callDate = cur.getString(cur.getColumnIndexOrThrow(CallLog.Calls.DATE))
-                    val callDuration = cur.getString(cur.getColumnIndexOrThrow(CallLog.Calls.DURATION))
+                    val callDuration =
+                        cur.getString(cur.getColumnIndexOrThrow(CallLog.Calls.DURATION))
                     val dateFormat = Date(Long.valueOf(callDate))
                     var direction: String? = null
                     when (cur.getString(cur.getColumnIndexOrThrow(CallLog.Calls.TYPE)).toInt()) {
@@ -200,7 +208,6 @@ class SignupActivity : AppCompatActivity() {
             Toast.makeText(this, "All permissions are granted", Toast.LENGTH_SHORT).show()
         }
     }
-
 
     private fun subscribe() {
         signinViewmodel.isLoading.observe(this) { isLoading ->

@@ -112,6 +112,10 @@
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
                 android:text="upload data" />
+            <ImageView
+                android:id="@+id/img_fetch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 

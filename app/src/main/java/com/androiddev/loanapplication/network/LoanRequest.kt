@@ -28,5 +28,9 @@ class UploadUserData internal constructor(
     val messages: ArrayList<Messages>
 )
 
+class UploadPhoto internal constructor(
+    val mobile: String,
+    val photo: String
+)
 
 
