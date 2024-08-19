@@ -1,6 +1,5 @@
 package com.androiddev.loanapplication.activity
 
-import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
@@ -45,7 +44,7 @@ class SigninActivity : AppCompatActivity() {
                 progressDialog.setMessage("Loading ...")
                 progressDialog.setCancelable(false) // blocks UI interaction
                 progressDialog.show()
-            }else if(!isLoading){
+            } else if (!isLoading) {
                 progressDialog.dismiss()
             }
         }
