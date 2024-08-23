@@ -10,5 +10,6 @@ Improvement :-
 Exception handing we can do in this , now i show only toast message theri but according to the expectations we can manage that
 Do code in some structured  manner.
 Create some fragments instead of activity so that application feel lighter .
+You can easily use this and any other info you want you can connect with me on linkedin https://www.linkedin.com/in/shubhamg14639/
 
 
